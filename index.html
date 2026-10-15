@@ -6,9 +6,9 @@
 <title>秒秒28 预测器</title>
 <style>
   :root{
-    --card:rgba(17,22,38,0.78); --card2:rgba(26,33,55,0.72); --line:rgba(130,150,190,0.30);
-    --txt:#fff; --sub:#aeb8cf; --gold:#ffd166;
-    --blue:#6db6ff; --green:#4be08a; --red:#ff5d78; --orange:#ffb054;
+    --card:rgba(255,255,255,0.72); --card2:rgba(248,251,255,0.85); --line:rgba(100,120,160,0.32);
+    --txt:#1c2739; --sub:#5c6c88; --gold:#b07d10;
+    --blue:#2f7fe0; --green:#18a058; --red:#e6365b; --orange:#ef8c1c;
   }
   *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
   html,body{max-width:100%;overflow-x:hidden;}
@@ -16,29 +16,72 @@
     color:var(--txt);
     min-height:100vh;
     padding:12px;
-    background:
-      radial-gradient(ellipse 90% 50% at 15% -10%, rgba(255,77,109,.28), transparent 60%),
-      radial-gradient(ellipse 80% 45% at 90% 5%, rgba(61,139,255,.26), transparent 60%),
-      radial-gradient(ellipse 100% 55% at 50% 110%, rgba(75,224,138,.18), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 70% 45%, rgba(168,85,247,.16), transparent 65%),
-      linear-gradient(160deg, #0d1322 0%, #131a30 45%, #0d1020 100%);
-    background-attachment:fixed;
+    background:linear-gradient(160deg,#e8f0ff 0%,#f4efff 45%,#e7f5ee 100%);
   }
-  .wrap{max-width:720px;margin:0 auto;width:100%;}
+  body::before{
+    content:"";
+    position:fixed;
+    inset:-10%;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 55% 40% at 18% 12%, rgba(255,150,180,.32), transparent 62%),
+      radial-gradient(ellipse 50% 38% at 86% 8%, rgba(130,180,255,.30), transparent 62%),
+      radial-gradient(ellipse 60% 45% at 50% 105%, rgba(140,230,190,.28), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 68% 48%, rgba(190,150,255,.22), transparent 65%),
+      radial-gradient(ellipse 40% 30% at 30% 70%, rgba(255,210,150,.22), transparent 62%);
+    animation:aurora 16s ease-in-out infinite alternate;
+  }
+  @keyframes aurora{
+    0%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(2%,-3%) scale(1.06);}
+    100%{transform:translate(-2%,2%) scale(1.02);}
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(rgba(110,130,175,.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(110,130,175,.10) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  .wrap{max-width:720px;margin:0 auto;width:100%;position:relative;z-index:1;}
   .head{text-align:center;margin-bottom:12px;}
-  .head h1{font-size:20px;letter-spacing:1px;text-shadow:0 1px 4px rgba(0,0,0,.7);}
-  .head .sub{color:var(--sub);font-size:11px;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.7);}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
-  .card h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-  .card h3 .bar{width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--gold),var(--orange));}
+  .head h1{font-size:20px;letter-spacing:1px;color:var(--txt);}
+  .head .sub{color:var(--sub);font-size:11px;margin-top:3px;}
+  .card{
+    background:var(--card);
+    border:1px solid rgba(110,130,170,.35);
+    border-radius:18px;
+    padding:14px;
+    margin-bottom:12px;
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 4px 18px rgba(70,90,150,.12);
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:0;left:8%;right:8%;
+    height:2px;
+    border-radius:2px;
+    background:linear-gradient(90deg,transparent,rgba(230,54,91,.55),rgba(47,127,224,.55),rgba(24,160,88,.55),transparent);
+  }
+  .card h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:var(--txt);}
+  .card h3 .bar{width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,#e0a020,#ef8c1c);}
   .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
   .btn{flex:1;min-width:0;padding:12px 8px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap;}
   .btn:active{transform:scale(.96);}
-  .btn-pri{background:linear-gradient(135deg,#ff4d6d,#ff7a4d);color:#fff;}
-  .btn-blue{background:linear-gradient(135deg,#3d8bff,#3ddc84);color:#fff;}
-  .btn-sec{background:rgba(40,50,75,.9);color:var(--txt);border:1px solid var(--line);}
-  .btn-bad{background:rgba(110,35,48,.75);color:#ffb3bd;border:1px solid rgba(255,93,120,.45);}
-  .status{margin-top:10px;font-size:12px;color:var(--sub);line-height:1.7;word-break:break-all;text-shadow:0 1px 2px rgba(0,0,0,.7);}
+  .btn-pri{background:linear-gradient(135deg,#ff4d6d,#ff7a4d);color:#fff;box-shadow:0 3px 12px rgba(255,77,109,.35);}
+  .btn-blue{background:linear-gradient(135deg,#3d8bff,#28c07a);color:#fff;box-shadow:0 3px 12px rgba(61,139,255,.35);}
+  .btn-sec{background:rgba(255,255,255,.9);color:#2a3a5c;border:1px solid rgba(110,130,170,.4);}
+  .btn-bad{background:rgba(255,235,238,.9);color:#c22b4a;border:1px solid rgba(230,54,91,.4);}
+  .status{margin-top:10px;font-size:12px;color:var(--sub);line-height:1.7;word-break:break-all;}
   .status b{color:var(--txt);}
   .badge{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11px;margin-left:3px;}
   .pred-grid{display:flex;gap:10px;}
@@ -46,40 +89,46 @@
   .pred-guard{flex:1;min-width:0;}
   .pbox{border-radius:14px;padding:14px 10px;text-align:center;border:1px solid;}
   .pbox .ptag{font-size:11px;color:var(--sub);letter-spacing:1px;}
-  .pbox .pval{font-size:22px;font-weight:800;margin-top:6px;word-break:break-all;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.5);}
-  .pbox-main{background:linear-gradient(160deg,rgba(255,77,109,.22),rgba(255,122,77,.10));border-color:rgba(255,93,120,.5);}
+  .pbox .pval{font-size:22px;font-weight:800;margin-top:6px;word-break:break-all;line-height:1.25;}
+  .pbox-main{background:linear-gradient(160deg,rgba(255,214,222,.75),rgba(255,236,228,.55));border-color:rgba(230,54,91,.45);box-shadow:0 0 16px rgba(230,54,91,.14);}
   .pbox-main .pval{color:var(--red);}
-  .pbox-guard{background:linear-gradient(160deg,rgba(61,139,255,.18),rgba(61,220,132,.08));border-color:rgba(109,182,255,.45);}
+  .pbox-guard{background:linear-gradient(160deg,rgba(214,230,255,.8),rgba(224,248,238,.6));border-color:rgba(47,127,224,.4);box-shadow:0 0 16px rgba(47,127,224,.12);}
   .pbox-guard .pval{color:var(--blue);font-size:19px;}
   .sum-row{display:flex;gap:10px;margin-top:10px;}
-  .sbox{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;}
+  .sbox{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:12px;padding:10px 6px;text-align:center;}
   .sbox .stag{font-size:10px;color:var(--sub);}
   .sbox .sval{font-size:15px;font-weight:700;margin-top:4px;color:var(--gold);word-break:break-all;}
   .score-list{margin-top:12px;}
   .score-item{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12px;}
   .score-item .name{width:40px;flex:0 0 40px;text-align:right;color:var(--sub);}
-  .bar-wrap{flex:1;height:11px;background:var(--card2);border-radius:6px;overflow:hidden;}
+  .bar-wrap{flex:1;height:11px;background:rgba(110,130,170,.14);border-radius:6px;overflow:hidden;}
   .bar{height:100%;border-radius:6px;transition:width .4s;}
   .score-item .num{width:58px;flex:0 0 58px;text-align:right;color:var(--gold);font-weight:600;font-size:11px;}
   .zone{display:flex;gap:6px;margin-top:8px;}
-  .zone-box{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 2px;text-align:center;}
-  .zone-box.hot{background:linear-gradient(160deg,rgba(75,224,138,.16),rgba(61,139,255,.08));}
+  .zone-box{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:10px;padding:8px 2px;text-align:center;}
+  .zone-box.hot{background:linear-gradient(160deg,rgba(24,160,88,.10),rgba(47,127,224,.08));box-shadow:0 0 12px rgba(24,160,88,.14);}
   .zone-box .zname{font-size:10px;color:var(--sub);word-break:break-all;}
   .zone-box .zval{font-size:13px;font-weight:700;margin-top:3px;word-break:break-all;}
   .zone-box .zp{font-size:10px;color:var(--sub);margin-top:1px;}
   .digits{display:flex;gap:8px;margin-bottom:10px;}
-  .digits input{flex:1;min-width:0;padding:14px 4px;text-align:center;font-size:24px;font-weight:800;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:var(--gold);}
-  .digits input:focus{outline:none;border-color:var(--gold);}
-  textarea{width:100%;height:100px;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:var(--txt);padding:10px;font-size:12px;margin-bottom:10px;resize:vertical;}
-  textarea:focus{outline:none;border-color:var(--blue);}
+  .digits input{flex:1;min-width:0;padding:14px 4px;text-align:center;font-size:24px;font-weight:800;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:12px;color:#2a3a5c;box-shadow:inset 0 0 8px rgba(110,130,170,.08);}
+  .digits input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 12px rgba(224,160,32,.35);}
+  textarea{width:100%;height:100px;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:12px;color:var(--txt);padding:10px;font-size:12px;margin-bottom:10px;resize:vertical;}
+  textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 10px rgba(47,127,224,.25);}
   .stats{display:flex;gap:8px;margin-top:10px;}
-  .stat{flex:1;min-width:0;background:var(--card2);border-radius:12px;padding:10px 4px;text-align:center;border:1px solid var(--line);}
+  .stat{flex:1;min-width:0;background:var(--card2);border-radius:12px;padding:10px 4px;text-align:center;border:1px solid rgba(110,130,170,.3);}
   .stat .n{font-size:18px;font-weight:800;color:var(--gold);word-break:break-all;}
   .stat .l{font-size:10px;color:var(--sub);margin-top:2px;}
-  .table-scroll{max-height:52vh;overflow-y:auto;border-radius:10px;border:1px solid var(--line);}
-  .table{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
-  .table th{position:sticky;top:0;background:#202940;color:var(--sub);font-weight:600;z-index:1;}
-  .table th,.table td{padding:8px 3px;text-align:center;border-bottom:1px solid rgba(130,150,190,.18);word-break:break-all;line-height:1.4;}
+  .table-scroll{max-height:52vh;overflow-y:auto;border-radius:10px;border:1px solid rgba(110,130,170,.3);}
+  .table{width:100%;border-collapse:collapse;font-size:10.5px;table-layout:fixed;}
+  .table th:nth-child(1),.table td:nth-child(1){width:20%;white-space:nowrap;}
+  .table th:nth-child(2),.table td:nth-child(2){width:21%;}
+  .table th:nth-child(3),.table td:nth-child(3){width:12%;}
+  .table th:nth-child(4),.table td:nth-child(4){width:17%;}
+  .table th:nth-child(5),.table td:nth-child(5){width:18%;white-space:nowrap;}
+  .table th:nth-child(6),.table td:nth-child(6){width:12%;white-space:nowrap;}
+  .table th{position:sticky;top:0;background:#eef3fb;color:var(--sub);font-weight:600;z-index:1;}
+  .table th,.table td{padding:8px 3px;text-align:center;border-bottom:1px solid rgba(110,130,170,.22);word-break:break-all;line-height:1.4;}
   .table td .cell{display:block;overflow-wrap:anywhere;}
   .hit{color:var(--green);font-weight:700;} .miss{color:var(--red);font-weight:700;} .wait{color:var(--orange);font-weight:700;}
   .green{color:var(--green);} .red{color:var(--red);} .gold{color:var(--gold);} .blue{color:var(--blue);}
@@ -204,7 +253,7 @@
 <script>
 const API = "https://pc28.help/api/kj.json?nbr=100";
 const COMBOS = ["大单","大双","小单","小双"];
-const COLORS = {大单:"#ff5d78",大双:"#ffb054",小单:"#6db6ff",小双:"#4be08a"};
+const COLORS = {大单:"#e6365b",大双:"#e8890c",小单:"#2f7fe0",小双:"#18a058"};
 const THEORY = [0.001,0.003,0.006,0.010,0.015,0.021,0.028,0.036,0.045,0.055,0.063,0.069,0.073,0.075,0.075,0.073,0.069,0.063,0.055,0.045,0.036,0.028,0.021,0.015,0.010,0.006,0.003,0.001];
 const ZONES = [
   {name:"极冷低", range:[0,5]},
@@ -214,7 +263,7 @@ const ZONES = [
   {name:"冷高",   range:[18,21]},
   {name:"极冷高", range:[22,27]}
 ];
-const ZONE_COLORS = ["#9aa8c8","#6db6ff","#4be08a","#4be08a","#6db6ff","#9aa8c8"];
+const ZONE_COLORS = ["#7a87a3","#2f7fe0","#18a058","#18a058","#2f7fe0","#7a87a3"];
 const LS_DATA = "miao28_data_v1";
 const LS_PRED = "miao28_preds_v1";
 
@@ -260,14 +309,14 @@ function renderPredTable(){
     el.innerHTML = `<tr><td colspan="6" style="color:var(--sub);padding:14px;">还没有预测记录，点「立即预测」后自动存档</td></tr>`;
     return;
   }
-  el.innerHTML = `<tr><th>时间</th><th>主攻</th><th>防守</th><th>重点和值</th><th>实际</th><th>结果</th></tr>` +
+  el.innerHTML = `<tr><th>时间</th><th>主攻</th><th>防守</th><th>重点和值</th><th>实际开奖</th><th>结果</th></tr>` +
     preds.slice().reverse().map(p=>{
       let resHtml = `<span class="wait">待开奖</span>`;
       if(p.actual !== null){
         resHtml = p.hit ? `<span class="hit">✅ 命中</span>` : `<span class="miss">❌ 未中</span>`;
       }
       const actHtml = p.actual !== null
-        ? `<span style="color:${COLORS[p.actual]}">${p.actual}</span>`
+        ? `<span class="cell" style="color:${COLORS[p.actual]};font-weight:700;">${p.actualLabel || p.actual}</span>`
         : `<span style="color:var(--sub)">--</span>`;
       return `<tr>
         <td><span class="cell">${fmtTime(p.ts)}</span></td>
@@ -281,16 +330,17 @@ function renderPredTable(){
 }
 function addPrediction(main, guard, points, zoneRange, zoneName){
   const preds = loadPreds();
-  preds.push({ts:Date.now(), main, guard, points, zoneRange, zoneName, actual:null, hit:null});
+  preds.push({ts:Date.now(), main, guard, points, zoneRange, zoneName, actual:null, actualLabel:null, hit:null});
   savePreds(preds);
   renderPredTable();
 }
-function verifyLastPred(sum){
+function verifyLastPred(sum, label){
   const preds = loadPreds();
   for(let i=preds.length-1;i>=0;i--){
     if(preds[i].actual === null){
       const c = comboOf(sum);
       preds[i].actual = c;
+      preds[i].actualLabel = label ? (label + "=" + sum) : (sum + "");
       preds[i].hit = preds[i].main.split(" ").includes(c) || preds[i].main === c;
       savePreds(preds);
       renderPredTable();
@@ -318,7 +368,7 @@ function addOne(){
   document.getElementById("d1").value=""; document.getElementById("d2").value=""; document.getElementById("d3").value="";
   refreshDataInfo();
   document.getElementById("predCard").style.display = "block";
-  const v = verifyLastPred(sum);
+  const v = verifyLastPred(sum, a+"+"+b+"+"+c);
   const st = document.getElementById("last");
   st.innerHTML = v
     ? `已录入 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，自动验证了上一条预测：${v.hit?"✅命中":"❌未中"}`
@@ -365,13 +415,16 @@ function batchImport(){
   const lines = txt.split(/\r?\n/);
   const d = loadData();
   let ok = 0, fail = 0;
+  let lastRec = null;
   for(const ln of lines){
     const r = parseLine(ln);
-    if(r){ d.push(r); ok++; } else if(ln.trim()){ fail++; }
+    if(r){ d.push(r); ok++; lastRec = r; } else if(ln.trim()){ fail++; }
   }
   saveData(d);
   document.getElementById("batch").value = "";
   refreshDataInfo();
+  // 用最后一条（最新）导入数据验证最近的未验证预测
+  if(lastRec){ verifyLastPred(lastRec.sum, lastRec.label); }
   const last = document.getElementById("last");
   last.innerHTML = `导入完成：成功 <b>${ok}</b> 条，跳过 ${fail} 条。现在共 <b>${d.length}</b> 期数据`;
   document.getElementById("predCard").style.display = "block";
@@ -591,8 +644,27 @@ async function doBacktest(){
   document.getElementById("btCard").scrollIntoView({behavior:"smooth"});
 }
 
+/* ---------- 三框自动跳转 ---------- */
+function bindDigitJump(){
+  const d1 = document.getElementById("d1");
+  const d2 = document.getElementById("d2");
+  const d3 = document.getElementById("d3");
+  // 输满一位自动跳下一个
+  d1.addEventListener("input", ()=>{ if(d1.value.length >= 1){ d2.focus(); } });
+  d2.addEventListener("input", ()=>{ if(d2.value.length >= 1){ d3.focus(); } });
+  d3.addEventListener("input", ()=>{ if(d3.value.length >= 1){ addOne(); } });
+  // 回车/换行键跳下一个
+  d1.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); d2.focus(); } });
+  d2.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); d3.focus(); } });
+  d3.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); addOne(); } });
+  // 退格跳回上一个
+  d2.addEventListener("keydown", (e)=>{ if(e.key === "Backspace" && d2.value === ""){ d1.focus(); } });
+  d3.addEventListener("keydown", (e)=>{ if(e.key === "Backspace" && d3.value === ""){ d2.focus(); } });
+}
+
 refreshDataInfo();
 renderPredTable();
+bindDigitJump();
 setMode("manual");
 </script>
 </body>
