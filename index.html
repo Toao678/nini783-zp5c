@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>秒秒28 预测器</title>
+<style>
+  :root{
+    --card:rgba(17,22,38,0.78); --card2:rgba(26,33,55,0.72); --line:rgba(130,150,190,0.30);
+    --txt:#fff; --sub:#aeb8cf; --gold:#ffd166;
+    --blue:#6db6ff; --green:#4be08a; --red:#ff5d78; --orange:#ffb054;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  html,body{max-width:100%;overflow-x:hidden;}
+  body{
+    color:var(--txt);
+    min-height:100vh;
+    padding:12px;
+    background:
+      radial-gradient(ellipse 90% 50% at 15% -10%, rgba(255,77,109,.28), transparent 60%),
+      radial-gradient(ellipse 80% 45% at 90% 5%, rgba(61,139,255,.26), transparent 60%),
+      radial-gradient(ellipse 100% 55% at 50% 110%, rgba(75,224,138,.18), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 70% 45%, rgba(168,85,247,.16), transparent 65%),
+      linear-gradient(160deg, #0d1322 0%, #131a30 45%, #0d1020 100%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:720px;margin:0 auto;width:100%;}
+  .head{text-align:center;margin-bottom:12px;}
+  .head h1{font-size:20px;letter-spacing:1px;text-shadow:0 1px 4px rgba(0,0,0,.7);}
+  .head .sub{color:var(--sub);font-size:11px;margin-top:3px;text-shadow:0 1px 2px rgba(0,0,0,.7);}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+  .card h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+  .card h3 .bar{width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--gold),var(--orange));}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .btn{flex:1;min-width:0;padding:12px 8px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap;}
+  .btn:active{transform:scale(.96);}
+  .btn-pri{background:linear-gradient(135deg,#ff4d6d,#ff7a4d);color:#fff;}
+  .btn-blue{background:linear-gradient(135deg,#3d8bff,#3ddc84);color:#fff;}
+  .btn-sec{background:rgba(40,50,75,.9);color:var(--txt);border:1px solid var(--line);}
+  .btn-bad{background:rgba(110,35,48,.75);color:#ffb3bd;border:1px solid rgba(255,93,120,.45);}
+  .status{margin-top:10px;font-size:12px;color:var(--sub);line-height:1.7;word-break:break-all;text-shadow:0 1px 2px rgba(0,0,0,.7);}
+  .status b{color:var(--txt);}
+  .badge{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11px;margin-left:3px;}
+  .pred-grid{display:flex;gap:10px;}
+  .pred-main{flex:1.4;min-width:0;}
+  .pred-guard{flex:1;min-width:0;}
+  .pbox{border-radius:14px;padding:14px 10px;text-align:center;border:1px solid;}
+  .pbox .ptag{font-size:11px;color:var(--sub);letter-spacing:1px;}
+  .pbox .pval{font-size:22px;font-weight:800;margin-top:6px;word-break:break-all;line-height:1.25;text-shadow:0 1px 3px rgba(0,0,0,.5);}
+  .pbox-main{background:linear-gradient(160deg,rgba(255,77,109,.22),rgba(255,122,77,.10));border-color:rgba(255,93,120,.5);}
+  .pbox-main .pval{color:var(--red);}
+  .pbox-guard{background:linear-gradient(160deg,rgba(61,139,255,.18),rgba(61,220,132,.08));border-color:rgba(109,182,255,.45);}
+  .pbox-guard .pval{color:var(--blue);font-size:19px;}
+  .sum-row{display:flex;gap:10px;margin-top:10px;}
+  .sbox{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center;}
+  .sbox .stag{font-size:10px;color:var(--sub);}
+  .sbox .sval{font-size:15px;font-weight:700;margin-top:4px;color:var(--gold);word-break:break-all;}
+  .score-list{margin-top:12px;}
+  .score-item{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12px;}
+  .score-item .name{width:40px;flex:0 0 40px;text-align:right;color:var(--sub);}
+  .bar-wrap{flex:1;height:11px;background:var(--card2);border-radius:6px;overflow:hidden;}
+  .bar{height:100%;border-radius:6px;transition:width .4s;}
+  .score-item .num{width:58px;flex:0 0 58px;text-align:right;color:var(--gold);font-weight:600;font-size:11px;}
+  .zone{display:flex;gap:6px;margin-top:8px;}
+  .zone-box{flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 2px;text-align:center;}
+  .zone-box.hot{background:linear-gradient(160deg,rgba(75,224,138,.16),rgba(61,139,255,.08));}
+  .zone-box .zname{font-size:10px;color:var(--sub);word-break:break-all;}
+  .zone-box .zval{font-size:13px;font-weight:700;margin-top:3px;word-break:break-all;}
+  .zone-box .zp{font-size:10px;color:var(--sub);margin-top:1px;}
+  .digits{display:flex;gap:8px;margin-bottom:10px;}
+  .digits input{flex:1;min-width:0;padding:14px 4px;text-align:center;font-size:24px;font-weight:800;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:var(--gold);}
+  .digits input:focus{outline:none;border-color:var(--gold);}
+  textarea{width:100%;height:100px;background:var(--card2);border:1px solid var(--line);border-radius:12px;color:var(--txt);padding:10px;font-size:12px;margin-bottom:10px;resize:vertical;}
+  textarea:focus{outline:none;border-color:var(--blue);}
+  .stats{display:flex;gap:8px;margin-top:10px;}
+  .stat{flex:1;min-width:0;background:var(--card2);border-radius:12px;padding:10px 4px;text-align:center;border:1px solid var(--line);}
+  .stat .n{font-size:18px;font-weight:800;color:var(--gold);word-break:break-all;}
+  .stat .l{font-size:10px;color:var(--sub);margin-top:2px;}
+  .table-scroll{max-height:52vh;overflow-y:auto;border-radius:10px;border:1px solid var(--line);}
+  .table{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
+  .table th{position:sticky;top:0;background:#202940;color:var(--sub);font-weight:600;z-index:1;}
+  .table th,.table td{padding:8px 3px;text-align:center;border-bottom:1px solid rgba(130,150,190,.18);word-break:break-all;line-height:1.4;}
+  .table td .cell{display:block;overflow-wrap:anywhere;}
+  .hit{color:var(--green);font-weight:700;} .miss{color:var(--red);font-weight:700;} .wait{color:var(--orange);font-weight:700;}
+  .green{color:var(--green);} .red{color:var(--red);} .gold{color:var(--gold);} .blue{color:var(--blue);}
+  .tip{font-size:11px;color:var(--sub);line-height:1.7;margin-top:8px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <h1>🎯 秒秒28 预测器</h1>
+    <div class="sub">手动录入 · PC28自动 · 双模式 | 6模型融合 + 和值区段</div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <button class="btn btn-blue" id="modeManual" onclick="setMode('manual')">📝 手动模式</button>
+      <button class="btn btn-sec" id="modeAuto" onclick="setMode('auto')">⚡ PC28自动</button>
+    </div>
+    <div class="status" id="last">手动模式：录入开奖号码 → 点「立即预测」</div>
+  </div>
+
+  <div class="card" id="predCard" style="display:none;">
+    <h3><span class="bar"></span>本期预测</h3>
+    <div class="pred-grid">
+      <div class="pred-main">
+        <div class="pbox pbox-main">
+          <div class="ptag">🎯 主攻组合</div>
+          <div class="pval" id="mainVal">-- --</div>
+        </div>
+      </div>
+      <div class="pred-guard">
+        <div class="pbox pbox-guard">
+          <div class="ptag">🛡 防守组合</div>
+          <div class="pval" id="guardVal">--</div>
+        </div>
+      </div>
+    </div>
+    <div class="sum-row">
+      <div class="sbox"><div class="stag">和值区段</div><div class="sval" id="sumZone">--</div></div>
+      <div class="sbox"><div class="stag">重点和值</div><div class="sval" id="sumPoint">--</div></div>
+      <div class="sbox"><div class="stag">和值倾向</div><div class="sval" id="sumTend">--</div></div>
+    </div>
+    <div class="score-list" id="scoreList"></div>
+    <div class="zone" id="zoneList"></div>
+    <div class="stats">
+      <div class="stat"><div class="n" id="btRate">--</div><div class="l">主攻命中率</div></div>
+      <div class="stat"><div class="n" id="sumRate">--</div><div class="l">和值区段命中</div></div>
+      <div class="stat"><div class="n" id="dataCount">0</div><div class="l">数据期数</div></div>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn btn-pri" onclick="doPredict()">🔮 立即预测</button>
+      <button class="btn btn-sec" onclick="doBacktest()">📊 回测验证</button>
+    </div>
+  </div>
+
+  <div class="card" id="manualCard">
+    <h3><span class="bar"></span>录入开奖</h3>
+    <div class="digits">
+      <input type="number" id="d1" min="0" max="9" inputmode="numeric" placeholder="0">
+      <input type="number" id="d2" min="0" max="9" inputmode="numeric" placeholder="0">
+      <input type="number" id="d3" min="0" max="9" inputmode="numeric" placeholder="0">
+    </div>
+    <div class="row" style="margin-bottom:12px;">
+      <button class="btn btn-pri" onclick="addOne()">➕ 添加本期</button>
+      <button class="btn btn-bad" onclick="delLast()">🗑 删最后一条</button>
+    </div>
+    <div class="status" style="margin:0 0 8px 0;">批量粘贴历史（每行一条，支持 <b>8+8+7 / 887 / 和值23 / 带期号整行</b>）</div>
+    <textarea id="batch" placeholder="例：&#10;8+8+7&#10;9+3+5&#10;和值19&#10;期号3493075 开奖6+2+1=9 小单"></textarea>
+    <div class="row">
+      <button class="btn btn-blue" onclick="batchImport()">📥 解析导入</button>
+      <button class="btn btn-bad" onclick="clearAll()">🧹 清空数据</button>
+    </div>
+    <div class="status" id="dataInfo">当前 0 期数据</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="bar"></span>预测记录（不设上限）</h3>
+    <div class="stats" style="margin-top:0;margin-bottom:10px;">
+      <div class="stat"><div class="n" id="prTotal">0</div><div class="l">总预测</div></div>
+      <div class="stat"><div class="n" id="prChecked">0</div><div class="l">已验证</div></div>
+      <div class="stat"><div class="n" id="prHit">0</div><div class="l">主攻命中</div></div>
+      <div class="stat"><div class="n" id="prRate">--</div><div class="l">命中率</div></div>
+    </div>
+    <div class="table-scroll">
+      <table class="table" id="prTable"></table>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn btn-bad" onclick="clearPreds()">🧹 清空预测记录</button>
+    </div>
+    <div class="tip">每次「立即预测」自动存档一条；录入本期开奖后自动验证最近一条未验证的预测。记录全部保存在本机，永不删除、不设上限。</div>
+  </div>
+
+  <div class="card" id="btCard" style="display:none;">
+    <h3><span class="bar"></span>回测报告（最近 60 期）</h3>
+    <div class="stats">
+      <div class="stat"><div class="n" id="btHit">--</div><div class="l">主攻命中</div></div>
+      <div class="stat"><div class="n" id="btRate2">--</div><div class="l">主攻命中率</div></div>
+      <div class="stat"><div class="n" id="btCover">--</div><div class="l">含防守覆盖率</div></div>
+      <div class="stat"><div class="n" id="btSum">--</div><div class="l">和值区段命中</div></div>
+    </div>
+    <div class="table-scroll" style="max-height:45vh;">
+      <table class="table" id="btTable"></table>
+    </div>
+    <div class="tip">回测＝用历史模拟「当时这样预测会不会中」，主攻命中率 50% 上下属正常。</div>
+  </div>
+
+  <div class="card">
+    <h3><span class="bar"></span>资金管理</h3>
+    <div class="table-scroll" style="max-height:none;">
+      <table class="table">
+        <tr><th>状态</th><th>主攻</th><th>防守</th><th>说明</th></tr>
+        <tr><td class="green">起步</td><td>1 倍</td><td>0.5 倍</td><td>主攻两路各1倍</td></tr>
+        <tr><td class="gold">连负1次</td><td>2.2 倍</td><td>1.1 倍</td><td>倍投追回</td></tr>
+        <tr><td class="red">连负2次</td><td>4.8 倍</td><td>2.4 倍</td><td>封顶</td></tr>
+        <tr><td class="blue">连中2次</td><td>1 倍</td><td>0.5 倍</td><td>复位</td></tr>
+      </table>
+    </div>
+    <div class="tip">铁律：单日止损 20% 停手；止盈 30% 停手；倍投最多 3 层。数据录入越多预测越稳，先录 60 期以上再实战。</div>
+  </div>
+</div>
+
+<script>
+const API = "https://pc28.help/api/kj.json?nbr=100";
+const COMBOS = ["大单","大双","小单","小双"];
+const COLORS = {大单:"#ff5d78",大双:"#ffb054",小单:"#6db6ff",小双:"#4be08a"};
+const THEORY = [0.001,0.003,0.006,0.010,0.015,0.021,0.028,0.036,0.045,0.055,0.063,0.069,0.073,0.075,0.075,0.073,0.069,0.063,0.055,0.045,0.036,0.028,0.021,0.015,0.010,0.006,0.003,0.001];
+const ZONES = [
+  {name:"极冷低", range:[0,5]},
+  {name:"冷低",   range:[6,9]},
+  {name:"热低",   range:[10,13]},
+  {name:"热高",   range:[14,17]},
+  {name:"冷高",   range:[18,21]},
+  {name:"极冷高", range:[22,27]}
+];
+const ZONE_COLORS = ["#9aa8c8","#6db6ff","#4be08a","#4be08a","#6db6ff","#9aa8c8"];
+const LS_DATA = "miao28_data_v1";
+const LS_PRED = "miao28_preds_v1";
+
+let mode = "manual";
+let cache = null;
+let lastBtRate = null, lastSumRate = null;
+
+function loadData(){ try{ return JSON.parse(localStorage.getItem(LS_DATA)) || []; }catch(e){ return []; } }
+function saveData(arr){ localStorage.setItem(LS_DATA, JSON.stringify(arr)); }
+function loadPreds(){ try{ return JSON.parse(localStorage.getItem(LS_PRED)) || []; }catch(e){ return []; } }
+function savePreds(arr){ localStorage.setItem(LS_PRED, JSON.stringify(arr)); }
+
+function comboOf(sum){
+  const big = sum >= 14, odd = sum % 2 === 1;
+  return (big?"大":"小") + (odd?"单":"双");
+}
+
+function refreshDataInfo(){
+  const d = loadData();
+  const info = document.getElementById("dataInfo");
+  const last3 = d.slice(-3).map(x=>x.sum + "(" + comboOf(x.sum) + ")").join(" → ");
+  info.innerHTML = d.length
+    ? `当前 <b>${d.length}</b> 期数据 | 最近: ${last3}`
+    : "当前 0 期数据（先录 60 期以上效果最好）";
+  document.getElementById("dataCount").textContent = d.length;
+}
+
+function fmtTime(ts){
+  const dt = new Date(ts);
+  const p = (n)=>String(n).padStart(2,"0");
+  return p(dt.getMonth()+1)+"-"+p(dt.getDate())+" "+p(dt.getHours())+":"+p(dt.getMinutes());
+}
+function renderPredTable(){
+  const preds = loadPreds();
+  document.getElementById("prTotal").textContent = preds.length;
+  const checked = preds.filter(p=>p.actual!==null);
+  const hit = checked.filter(p=>p.hit).length;
+  document.getElementById("prChecked").textContent = checked.length;
+  document.getElementById("prHit").textContent = hit;
+  document.getElementById("prRate").textContent = checked.length ? (hit/checked.length*100).toFixed(1)+"%" : "--";
+  const el = document.getElementById("prTable");
+  if(!preds.length){
+    el.innerHTML = `<tr><td colspan="6" style="color:var(--sub);padding:14px;">还没有预测记录，点「立即预测」后自动存档</td></tr>`;
+    return;
+  }
+  el.innerHTML = `<tr><th>时间</th><th>主攻</th><th>防守</th><th>重点和值</th><th>实际</th><th>结果</th></tr>` +
+    preds.slice().reverse().map(p=>{
+      let resHtml = `<span class="wait">待开奖</span>`;
+      if(p.actual !== null){
+        resHtml = p.hit ? `<span class="hit">✅ 命中</span>` : `<span class="miss">❌ 未中</span>`;
+      }
+      const actHtml = p.actual !== null
+        ? `<span style="color:${COLORS[p.actual]}">${p.actual}</span>`
+        : `<span style="color:var(--sub)">--</span>`;
+      return `<tr>
+        <td><span class="cell">${fmtTime(p.ts)}</span></td>
+        <td><span class="cell">${p.main}</span></td>
+        <td><span class="cell">${p.guard}</span></td>
+        <td><span class="cell">${p.points}</span></td>
+        <td>${actHtml}</td>
+        <td>${resHtml}</td>
+      </tr>`;
+    }).join("");
+}
+function addPrediction(main, guard, points, zoneRange, zoneName){
+  const preds = loadPreds();
+  preds.push({ts:Date.now(), main, guard, points, zoneRange, zoneName, actual:null, hit:null});
+  savePreds(preds);
+  renderPredTable();
+}
+function verifyLastPred(sum){
+  const preds = loadPreds();
+  for(let i=preds.length-1;i>=0;i--){
+    if(preds[i].actual === null){
+      const c = comboOf(sum);
+      preds[i].actual = c;
+      preds[i].hit = preds[i].main.split(" ").includes(c) || preds[i].main === c;
+      savePreds(preds);
+      renderPredTable();
+      return preds[i];
+    }
+  }
+  return null;
+}
+function clearPreds(){
+  if(!confirm("确定清空全部预测记录？")) return;
+  savePreds([]);
+  renderPredTable();
+}
+
+function addOne(){
+  const a = document.getElementById("d1").value;
+  const b = document.getElementById("d2").value;
+  const c = document.getElementById("d3").value;
+  if(a==="" || b==="" || c===""){ alert("三个框都要填 0-9"); return; }
+  const sum = +a + +b + +c;
+  if(sum > 27){ alert("和值超 27，检查输入"); return; }
+  const d = loadData();
+  d.push({sum, label: a+"+"+b+"+"+c});
+  saveData(d);
+  document.getElementById("d1").value=""; document.getElementById("d2").value=""; document.getElementById("d3").value="";
+  refreshDataInfo();
+  document.getElementById("predCard").style.display = "block";
+  const v = verifyLastPred(sum);
+  const st = document.getElementById("last");
+  st.innerHTML = v
+    ? `已录入 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，自动验证了上一条预测：${v.hit?"✅命中":"❌未中"}`
+    : `已录入 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，暂无待验证预测`;
+}
+function delLast(){
+  const d = loadData();
+  if(!d.length) return;
+  d.pop();
+  saveData(d);
+  refreshDataInfo();
+}
+function clearAll(){
+  if(!confirm("确定清空全部开奖数据？")) return;
+  saveData([]);
+  refreshDataInfo();
+}
+
+function parseLine(line){
+  line = String(line).trim();
+  if(!line) return null;
+  let m = line.match(/(\d)\s*[+,，、\s]\s*(\d)\s*[+,，、\s]\s*(\d)/);
+  if(m){
+    const sum = +m[1] + +m[2] + +m[3];
+    if(sum <= 27) return {sum, label: m[1]+"+"+m[2]+"+"+m[3]};
+  }
+  m = line.match(/^\D*(\d)(\d)(\d)\D*$/);
+  if(m && !/[+\s,，、]/.test(line)){
+    return {sum: +m[1] + +m[2] + +m[3], label: m[1]+"+"+m[2]+"+"+m[3]};
+  }
+  m = line.match(/(?:和值|总和|点数|结果|开奖|＝|=|:)\s*(\d{1,2})/);
+  if(m && +m[1] <= 27) return {sum:+m[1], label: "和值"+m[1]};
+  const nums = line.match(/\d+/g);
+  if(nums){
+    for(const n of nums){
+      const v = +n;
+      if(v <= 27 && !(v === 0 && n.length > 1)) return {sum:v, label: "和值"+v};
+    }
+  }
+  return null;
+}
+function batchImport(){
+  const txt = document.getElementById("batch").value;
+  const lines = txt.split(/\r?\n/);
+  const d = loadData();
+  let ok = 0, fail = 0;
+  for(const ln of lines){
+    const r = parseLine(ln);
+    if(r){ d.push(r); ok++; } else if(ln.trim()){ fail++; }
+  }
+  saveData(d);
+  document.getElementById("batch").value = "";
+  refreshDataInfo();
+  const last = document.getElementById("last");
+  last.innerHTML = `导入完成：成功 <b>${ok}</b> 条，跳过 ${fail} 条。现在共 <b>${d.length}</b> 期数据`;
+  document.getElementById("predCard").style.display = "block";
+}
+
+function probModel(sums, combos){
+  const n = combos.length;
+  const S = {大单:0,大双:0,小单:0,小双:0};
+  const norm = (o)=>{ const t=Object.values(o).reduce((a,b)=>a+b,0)||1; COMBOS.forEach(c=>o[c]/=t); };
+
+  const alpha = 0.93, ew = {大单:0,大双:0,小单:0,小双:0};
+  for(let i=0;i<n;i++) ew[combos[i]] += Math.pow(alpha, n-1-i);
+  norm(ew); COMBOS.forEach(c=>S[c]+=ew[c]);
+
+  const trans = {};
+  for(let i=1;i<n;i++){ const p=combos[i-1],c=combos[i]; trans[p]=trans[p]||{}; trans[p][c]=(trans[p][c]||0)+1; }
+  const t1 = trans[combos[n-1]]||{大单:1,大双:1,小单:1,小双:1};
+  norm(t1); COMBOS.forEach(c=>S[c]+=t1[c]);
+
+  const trans2 = {};
+  for(let i=2;i<n;i++){ const k=combos[i-2]+"|"+combos[i-1],c=combos[i]; trans2[k]=trans2[k]||{}; trans2[k][c]=(trans2[k][c]||0)+1; }
+  const t2 = trans2[combos[n-2]+"|"+combos[n-1]]||{大单:1,大双:1,小单:1,小双:1};
+  norm(t2); COMBOS.forEach(c=>S[c]+=t2[c]);
+
+  const win=30, seg=sums.slice(-win);
+  const pBig = seg.filter(x=>x>=14).length/win;
+  const pOdd = seg.filter(x=>x%2).length/win;
+  const indep = {大单:pBig*pOdd,大双:pBig*(1-pOdd),小单:(1-pBig)*pOdd,小双:(1-pBig)*(1-pOdd)};
+  norm(indep); COMBOS.forEach(c=>S[c]+=indep[c]);
+
+  const gap = {大单:0,大双:0,小单:0,小双:0};
+  const found = new Set();
+  for(let i=n-1;i>=0;i--){ COMBOS.forEach(c=>{ if(!found.has(c)) gap[c]++; }); found.add(combos[i]); }
+  norm(gap); COMBOS.forEach(c=>S[c]+=gap[c]);
+
+  const last5 = sums.slice(-5);
+  const bigCnt = last5.filter(x=>x>=14).length;
+  const oddCnt = last5.filter(x=>x%2).length;
+  const mom = {大单:1,大双:1,小单:1,小双:1};
+  COMBOS.forEach(c=>{
+    const isBig=c.startsWith("大"), isOdd=c.endsWith("单");
+    mom[c] *= (isBig===(bigCnt>=3)?1.15:0.85);
+    mom[c] *= (isOdd===(oddCnt>=3)?1.15:0.85);
+  });
+  norm(mom); COMBOS.forEach(c=>S[c]+=mom[c]);
+
+  const ranked = COMBOS.slice().sort((a,b)=>S[b]-S[a]);
+  return {ranked, S};
+}
+
+function sumModel(sums){
+  const n = sums.length;
+  const win = Math.min(30, n);
+  const seg = sums.slice(-win);
+  const freq = new Array(28).fill(0);
+  seg.forEach(s=>freq[s]++);
+  const emp = freq.map(f=>f/win);
+  const wEmp=0.55, wTh=0.45;
+  const prob = new Array(28).fill(0);
+  for(let i=0;i<28;i++) prob[i] = wEmp*emp[i] + wTh*THEORY[i];
+  const last5 = sums.slice(-5);
+  const mean5 = last5.reduce((a,b)=>a+b,0)/5;
+  const drift = mean5 - 13.5;
+  for(let i=0;i<28;i++) prob[i] *= (1 + drift*(i-13.5)/200);
+  const t = prob.reduce((a,b)=>a+b,0);
+  for(let i=0;i<28;i++) prob[i]/=t;
+  const zones = ZONES.map((z,zi)=>{ let p=0; for(let i=z.range[0];i<=z.range[1];i++) p+=prob[i]; return {name:z.name, range:z.range, p, color:ZONE_COLORS[zi]}; });
+  zones.sort((a,b)=>b.p-a.p);
+  const idx = prob.map((p,i)=>({p,i})).sort((a,b)=>b.p-a.p);
+  const top3 = idx.slice(0,3).map(x=>x.i).sort((a,b)=>a-b);
+  const exp = prob.reduce((a,p,i)=>a+p*i,0);
+  let tend = "均衡";
+  if(exp<12.5) tend="偏小"; else if(exp>14.5) tend="偏大";
+  return {prob, zones, top3, tend, exp};
+}
+
+function renderScore(ranked, S){
+  const el = document.getElementById("scoreList");
+  const max = Math.max(...COMBOS.map(c=>S[c]))||1;
+  el.innerHTML = ranked.map(c=>`
+    <div class="score-item">
+      <span class="name">${c}</span>
+      <div class="bar-wrap"><div class="bar" style="width:${S[c]/max*100}%;background:${COLORS[c]}"></div></div>
+      <span class="num">${(S[c]*100).toFixed(1)}%</span>
+    </div>`).join("");
+}
+function renderZones(zones){
+  const el = document.getElementById("zoneList");
+  el.innerHTML = zones.map((z,i)=>`
+    <div class="zone-box${i===0?' hot':''}" style="border-color:${z.color}${i===0?'':'55'}">
+      <div class="zname">${z.name}<br>${z.range[0]}-${z.range[1]}</div>
+      <div class="zval" style="color:${z.color}">${(z.p*100).toFixed(1)}%</div>
+      <div class="zp">命中概率</div>
+    </div>`).join("");
+}
+
+function applyPrediction(ranked, S, sm){
+  const main = ranked.slice(0,2), guard = ranked[2];
+  document.getElementById("mainVal").textContent = main.join(" ");
+  document.getElementById("guardVal").textContent = guard;
+  renderScore(ranked, S);
+  document.getElementById("sumZone").textContent = sm.zones[0].name + " " + sm.zones[0].range[0] + "-" + sm.zones[0].range[1];
+  document.getElementById("sumPoint").textContent = sm.top3.join(" / ");
+  document.getElementById("sumTend").textContent = sm.tend;
+  renderZones(sm.zones);
+  document.getElementById("predCard").style.display = "block";
+  if(lastBtRate!=null) document.getElementById("btRate").textContent = lastBtRate.toFixed(1)+"%";
+  if(lastSumRate!=null) document.getElementById("sumRate").textContent = lastSumRate.toFixed(1)+"%";
+  addPrediction(main.join(" "), guard, sm.top3.join("/"), sm.zones[0].range, sm.zones[0].name);
+}
+
+function setMode(m){
+  mode = m;
+  document.getElementById("modeManual").className = m==="manual" ? "btn btn-blue" : "btn btn-sec";
+  document.getElementById("modeAuto").className = m==="auto" ? "btn btn-blue" : "btn btn-sec";
+  document.getElementById("manualCard").style.display = m==="manual" ? "block" : "none";
+  document.getElementById("last").innerHTML = m==="manual"
+    ? "手动模式：录入开奖号码 → 点「立即预测」"
+    : "PC28自动：正在加载最新开奖…";
+  if(m === "auto"){ doPredict(); }
+}
+
+async function fetchAuto(){
+  const r = await fetch(API, {cache:"no-store"});
+  const d = await r.json();
+  if(d.message !== "success") throw new Error("接口异常: "+d.message);
+  const rows = d.data.slice().reverse();
+  return {sums: rows.map(x=>parseInt(x.num)), rows};
+}
+
+async function doPredict(){
+  if(mode === "auto"){
+    try{
+      cache = await fetchAuto();
+      const sums = cache.sums;
+      const combos = sums.map(comboOf);
+      const {ranked, S} = probModel(sums, combos);
+      const sm = sumModel(sums);
+      applyPrediction(ranked, S, sm);
+      const last = cache.rows[cache.rows.length-1];
+      document.getElementById("last").innerHTML =
+        `最新期号 <b>${last.nbr}</b> 开奖 <b>${last.number}</b> = <b>${last.num}</b> <span class="badge" style="background:${COLORS[last.combination]}22;color:${COLORS[last.combination]}">${last.combination}</span>`;
+    }catch(e){
+      document.getElementById("last").innerHTML = "出错：" + e.message;
+    }
+    return;
+  }
+  const d = loadData();
+  if(d.length < 10){
+    document.getElementById("last").innerHTML = "数据不足 10 期，先去录入历史开奖（建议 60 期以上）";
+    return;
+  }
+  const sums = d.map(x=>x.sum);
+  const combos = sums.map(comboOf);
+  const {ranked, S} = probModel(sums, combos);
+  const sm = sumModel(sums);
+  applyPrediction(ranked, S, sm);
+  document.getElementById("last").innerHTML = `手动模式：共 <b>${d.length}</b> 期数据，预测完成（已存档到预测记录）`;
+}
+
+async function doBacktest(){
+  let rows = null;
+  if(mode === "auto"){
+    if(!cache) cache = await fetchAuto();
+    rows = cache.rows;
+  } else {
+    const d = loadData();
+    if(d.length < 40){
+      document.getElementById("last").innerHTML = "手动回测需要至少 40 期数据，先去录入";
+      return;
+    }
+    rows = d;
+  }
+  const sums = rows.map(x=>mode==="auto"?parseInt(x.num):x.sum);
+  const combos = sums.map(comboOf);
+  const rounds = Math.min(60, sums.length - 30);
+  const startIdx = sums.length - rounds;
+  let hit=0, cover=0, sumHit=0;
+  const detail=[];
+  for(let i=0;i<rounds;i++){
+    const idx = startIdx + i;
+    const hs = sums.slice(0, idx);
+    const hc = combos.slice(0, idx);
+    const {ranked} = probModel(hs, hc);
+    const sm = sumModel(hs);
+    const main = new Set(ranked.slice(0,2));
+    const guard = ranked[2];
+    const real = combos[idx];
+    const realSum = sums[idx];
+    const isHit = main.has(real);
+    const isCover = isHit || real===guard;
+    if(isHit) hit++;
+    if(isCover) cover++;
+    const topZone = sm.zones[0];
+    if(realSum >= topZone.range[0] && realSum <= topZone.range[1]) sumHit++;
+    detail.push({label: rows[idx].label || rows[idx].nbr || ("#"+idx), main:ranked.slice(0,2).join(" "), guard, real, realSum, hit:isHit});
+  }
+  const rate = hit/rounds*100, coverRate = cover/rounds*100, sumRate = sumHit/rounds*100;
+  lastBtRate = rate; lastSumRate = sumRate;
+  document.getElementById("btHit").textContent = hit;
+  document.getElementById("btRate2").textContent = rate.toFixed(1)+"%";
+  document.getElementById("btRate").textContent = rate.toFixed(1)+"%";
+  document.getElementById("btCover").textContent = coverRate.toFixed(1)+"%";
+  document.getElementById("btSum").textContent = sumRate.toFixed(1)+"%";
+  document.getElementById("sumRate").textContent = sumRate.toFixed(1)+"%";
+  const table = document.getElementById("btTable");
+  table.innerHTML = `<tr><th>号码</th><th>主攻</th><th>防守</th><th>实际</th><th>和值</th><th>结果</th></tr>` +
+    detail.map((d)=>`<tr>
+      <td><span class="cell">${d.label}</span></td>
+      <td><span class="cell">${d.main}</span></td>
+      <td><span class="cell">${d.guard}</span></td>
+      <td><span class="cell" style="color:${COLORS[d.real]}">${d.real}</span></td>
+      <td><span class="cell">${d.realSum}</span></td>
+      <td class="${d.hit?'green':'red'}">${d.hit?'命中':'未中'}</td>
+    </tr>`).join("");
+  document.getElementById("btCard").style.display = "block";
+  document.getElementById("btCard").scrollIntoView({behavior:"smooth"});
+}
+
+refreshDataInfo();
+renderPredTable();
+setMode("manual");
+</script>
+</body>
+</html>
