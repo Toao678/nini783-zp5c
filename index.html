@@ -6,7 +6,7 @@
 <title>秒秒28 预测器</title>
 <style>
   :root{
-    --card:rgba(255,255,255,0.72); --card2:rgba(248,251,255,0.85); --line:rgba(100,120,160,0.32);
+    --card:rgba(255,255,255,0.80); --card2:rgba(248,251,255,0.88); --line:rgba(100,120,160,0.32);
     --txt:#1c2739; --sub:#5c6c88; --gold:#b07d10;
     --blue:#2f7fe0; --green:#18a058; --red:#e6365b; --orange:#ef8c1c;
   }
@@ -15,21 +15,16 @@
   body{
     color:var(--txt);
     min-height:100vh;
-    padding:12px;
+    padding:10px;
     background:linear-gradient(160deg,#e8f0ff 0%,#f4efff 45%,#e7f5ee 100%);
   }
   body::before{
-    content:"";
-    position:fixed;
-    inset:-10%;
-    z-index:0;
-    pointer-events:none;
+    content:"";position:fixed;inset:-10%;z-index:0;pointer-events:none;
     background:
-      radial-gradient(ellipse 55% 40% at 18% 12%, rgba(255,150,180,.32), transparent 62%),
-      radial-gradient(ellipse 50% 38% at 86% 8%, rgba(130,180,255,.30), transparent 62%),
-      radial-gradient(ellipse 60% 45% at 50% 105%, rgba(140,230,190,.28), transparent 60%),
-      radial-gradient(ellipse 45% 35% at 68% 48%, rgba(190,150,255,.22), transparent 65%),
-      radial-gradient(ellipse 40% 30% at 30% 70%, rgba(255,210,150,.22), transparent 62%);
+      radial-gradient(ellipse 55% 40% at 18% 12%, rgba(255,150,180,.30), transparent 62%),
+      radial-gradient(ellipse 50% 38% at 86% 8%, rgba(130,180,255,.28), transparent 62%),
+      radial-gradient(ellipse 60% 45% at 50% 105%, rgba(140,230,190,.26), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 68% 48%, rgba(190,150,255,.20), transparent 65%);
     animation:aurora 16s ease-in-out infinite alternate;
   }
   @keyframes aurora{
@@ -38,130 +33,141 @@
     100%{transform:translate(-2%,2%) scale(1.02);}
   }
   body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background-image:
       linear-gradient(rgba(110,130,175,.10) 1px, transparent 1px),
       linear-gradient(90deg, rgba(110,130,175,.10) 1px, transparent 1px);
     background-size:26px 26px;
   }
-  .wrap{max-width:720px;margin:0 auto;width:100%;position:relative;z-index:1;}
-  .head{text-align:center;margin-bottom:12px;}
-  .head h1{font-size:20px;letter-spacing:1px;color:var(--txt);}
+  .wrap{max-width:680px;margin:0 auto;width:100%;position:relative;z-index:1;}
+  .head{text-align:center;margin-bottom:10px;}
+  .head h1{font-size:19px;letter-spacing:1px;color:var(--txt);}
   .head .sub{color:var(--sub);font-size:11px;margin-top:3px;}
   .card{
     background:var(--card);
     border:1px solid rgba(110,130,170,.35);
-    border-radius:18px;
-    padding:14px;
-    margin-bottom:12px;
-    -webkit-backdrop-filter:blur(14px);
-    backdrop-filter:blur(14px);
+    border-radius:16px;
+    padding:12px;
+    margin-bottom:10px;
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
     position:relative;
     overflow:hidden;
-    box-shadow:0 4px 18px rgba(70,90,150,.12);
+    box-shadow:0 3px 14px rgba(70,90,150,.12);
   }
   .card::before{
-    content:"";
-    position:absolute;
-    top:0;left:8%;right:8%;
-    height:2px;
-    border-radius:2px;
+    content:"";position:absolute;top:0;left:8%;right:8%;height:2px;border-radius:2px;
     background:linear-gradient(90deg,transparent,rgba(230,54,91,.55),rgba(47,127,224,.55),rgba(24,160,88,.55),transparent);
   }
-  .card h3{font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:var(--txt);}
-  .card h3 .bar{width:4px;height:14px;border-radius:2px;background:linear-gradient(180deg,#e0a020,#ef8c1c);}
-  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-  .btn{flex:1;min-width:0;padding:12px 8px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap;}
+  .card h3{font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:var(--txt);}
+  .card h3 .bar{width:4px;height:13px;border-radius:2px;background:linear-gradient(180deg,#e0a020,#ef8c1c);}
+  .row{display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+  .btn{flex:1;min-width:0;padding:11px 8px;border:none;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s;white-space:nowrap;}
   .btn:active{transform:scale(.96);}
-  .btn-pri{background:linear-gradient(135deg,#ff4d6d,#ff7a4d);color:#fff;box-shadow:0 3px 12px rgba(255,77,109,.35);}
-  .btn-blue{background:linear-gradient(135deg,#3d8bff,#28c07a);color:#fff;box-shadow:0 3px 12px rgba(61,139,255,.35);}
-  .btn-sec{background:rgba(255,255,255,.9);color:#2a3a5c;border:1px solid rgba(110,130,170,.4);}
+  .btn-pri{background:linear-gradient(135deg,#ff4d6d,#ff7a4d);color:#fff;box-shadow:0 3px 12px rgba(255,77,109,.32);}
+  .btn-blue{background:linear-gradient(135deg,#3d8bff,#28c07a);color:#fff;box-shadow:0 3px 12px rgba(61,139,255,.32);}
+  .btn-sec{background:rgba(255,255,255,.92);color:#2a3a5c;border:1px solid rgba(110,130,170,.4);}
   .btn-bad{background:rgba(255,235,238,.9);color:#c22b4a;border:1px solid rgba(230,54,91,.4);}
-  .status{margin-top:10px;font-size:12px;color:var(--sub);line-height:1.7;word-break:break-all;}
+  .status{margin-top:8px;font-size:11px;color:var(--sub);line-height:1.6;word-break:break-all;}
   .status b{color:var(--txt);}
-  .badge{display:inline-block;padding:1px 7px;border-radius:6px;font-size:11px;margin-left:3px;}
-  .pred-grid{display:flex;gap:10px;}
+  .badge{display:inline-block;padding:1px 6px;border-radius:5px;font-size:10px;margin-left:3px;}
+
+  /* 预测结果 */
+  .pred-grid{display:flex;gap:8px;}
   .pred-main{flex:1.4;min-width:0;}
   .pred-guard{flex:1;min-width:0;}
-  .pbox{border-radius:14px;padding:14px 10px;text-align:center;border:1px solid;}
-  .pbox .ptag{font-size:11px;color:var(--sub);letter-spacing:1px;}
-  .pbox .pval{font-size:22px;font-weight:800;margin-top:6px;word-break:break-all;line-height:1.25;}
-  .pbox-main{background:linear-gradient(160deg,rgba(255,214,222,.75),rgba(255,236,228,.55));border-color:rgba(230,54,91,.45);box-shadow:0 0 16px rgba(230,54,91,.14);}
+  .pbox{border-radius:13px;padding:12px 8px;text-align:center;border:1px solid;}
+  .pbox .ptag{font-size:10px;color:var(--sub);letter-spacing:1px;}
+  .pbox .pval{font-size:21px;font-weight:800;margin-top:4px;word-break:break-all;line-height:1.25;}
+  .pbox-main{background:linear-gradient(160deg,rgba(255,214,222,.75),rgba(255,236,228,.55));border-color:rgba(230,54,91,.45);box-shadow:0 0 14px rgba(230,54,91,.14);}
   .pbox-main .pval{color:var(--red);}
-  .pbox-guard{background:linear-gradient(160deg,rgba(214,230,255,.8),rgba(224,248,238,.6));border-color:rgba(47,127,224,.4);box-shadow:0 0 16px rgba(47,127,224,.12);}
-  .pbox-guard .pval{color:var(--blue);font-size:19px;}
-  .sum-row{display:flex;gap:10px;margin-top:10px;}
-  .sbox{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:12px;padding:10px 6px;text-align:center;}
-  .sbox .stag{font-size:10px;color:var(--sub);}
-  .sbox .sval{font-size:15px;font-weight:700;margin-top:4px;color:var(--gold);word-break:break-all;}
-  .score-list{margin-top:12px;}
-  .score-item{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:12px;}
-  .score-item .name{width:40px;flex:0 0 40px;text-align:right;color:var(--sub);}
-  .bar-wrap{flex:1;height:11px;background:rgba(110,130,170,.14);border-radius:6px;overflow:hidden;}
-  .bar{height:100%;border-radius:6px;transition:width .4s;}
-  .score-item .num{width:58px;flex:0 0 58px;text-align:right;color:var(--gold);font-weight:600;font-size:11px;}
-  .zone{display:flex;gap:6px;margin-top:8px;}
-  .zone-box{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:10px;padding:8px 2px;text-align:center;}
-  .zone-box.hot{background:linear-gradient(160deg,rgba(24,160,88,.10),rgba(47,127,224,.08));box-shadow:0 0 12px rgba(24,160,88,.14);}
-  .zone-box .zname{font-size:10px;color:var(--sub);word-break:break-all;}
-  .zone-box .zval{font-size:13px;font-weight:700;margin-top:3px;word-break:break-all;}
-  .zone-box .zp{font-size:10px;color:var(--sub);margin-top:1px;}
-  .digits{display:flex;gap:8px;margin-bottom:10px;}
-  .digits input{flex:1;min-width:0;padding:14px 4px;text-align:center;font-size:24px;font-weight:800;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:12px;color:#2a3a5c;box-shadow:inset 0 0 8px rgba(110,130,170,.08);}
+  .pbox-guard{background:linear-gradient(160deg,rgba(214,230,255,.8),rgba(224,248,238,.6));border-color:rgba(47,127,224,.4);box-shadow:0 0 14px rgba(47,127,224,.12);}
+  .pbox-guard .pval{color:var(--blue);font-size:18px;}
+  .sum-row{display:flex;gap:7px;margin-top:8px;}
+  .sbox{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:10px;padding:8px 5px;text-align:center;}
+  .sbox .stag{font-size:9px;color:var(--sub);}
+  .sbox .sval{font-size:14px;font-weight:700;margin-top:3px;color:var(--gold);word-break:break-all;}
+
+  /* 折叠区 */
+  details{margin-top:10px;}
+  details summary{
+    font-size:11px;color:var(--sub);cursor:pointer;padding:6px 2px;
+    user-select:none;list-style-position:outside;
+  }
+  details summary:active{opacity:.7;}
+  details[open] summary{margin-bottom:4px;}
+  .score-list{margin-top:6px;}
+  .score-item{display:flex;align-items:center;gap:7px;margin-bottom:6px;font-size:11px;}
+  .score-item .name{width:38px;flex:0 0 38px;text-align:right;color:var(--sub);}
+  .bar-wrap{flex:1;height:10px;background:rgba(110,130,170,.14);border-radius:5px;overflow:hidden;}
+  .bar{height:100%;border-radius:5px;transition:width .4s;}
+  .score-item .num{width:55px;flex:0 0 55px;text-align:right;color:var(--gold);font-weight:600;font-size:10px;}
+  .zone{display:flex;gap:5px;margin-top:6px;}
+  .zone-box{flex:1;min-width:0;background:var(--card2);border:1px solid rgba(110,130,170,.3);border-radius:9px;padding:7px 2px;text-align:center;}
+  .zone-box.hot{background:linear-gradient(160deg,rgba(24,160,88,.10),rgba(47,127,224,.08));box-shadow:0 0 10px rgba(24,160,88,.14);}
+  .zone-box .zname{font-size:9px;color:var(--sub);word-break:break-all;}
+  .zone-box .zval{font-size:12px;font-weight:700;margin-top:2px;word-break:break-all;}
+  .zone-box .zp{font-size:9px;color:var(--sub);margin-top:1px;}
+
+  /* 输入 */
+  .digits{display:flex;gap:7px;margin-bottom:8px;}
+  .digits input{flex:1;min-width:0;padding:13px 4px;text-align:center;font-size:24px;font-weight:800;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:11px;color:#2a3a5c;box-shadow:inset 0 0 8px rgba(110,130,170,.08);}
   .digits input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 12px rgba(224,160,32,.35);}
-  textarea{width:100%;height:100px;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:12px;color:var(--txt);padding:10px;font-size:12px;margin-bottom:10px;resize:vertical;}
+  textarea{width:100%;height:88px;background:#fff;border:1px solid rgba(110,130,170,.4);border-radius:11px;color:var(--txt);padding:9px;font-size:12px;margin-bottom:8px;resize:vertical;}
   textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 10px rgba(47,127,224,.25);}
-  .stats{display:flex;gap:8px;margin-top:10px;}
-  .stat{flex:1;min-width:0;background:var(--card2);border-radius:12px;padding:10px 4px;text-align:center;border:1px solid rgba(110,130,170,.3);}
-  .stat .n{font-size:18px;font-weight:800;color:var(--gold);word-break:break-all;}
-  .stat .l{font-size:10px;color:var(--sub);margin-top:2px;}
-  .table-scroll{max-height:52vh;overflow-y:auto;border-radius:10px;border:1px solid rgba(110,130,170,.3);}
+
+  /* 统计 */
+  .stats{display:flex;gap:7px;margin-top:8px;}
+  .stat{flex:1;min-width:0;background:var(--card2);border-radius:11px;padding:8px 4px;text-align:center;border:1px solid rgba(110,130,170,.3);}
+  .stat .n{font-size:16px;font-weight:800;color:var(--gold);word-break:break-all;}
+  .stat .l{font-size:9px;color:var(--sub);margin-top:2px;}
+
+  /* 表格 */
+  .table-scroll{max-height:46vh;overflow-y:auto;border-radius:10px;border:1px solid rgba(110,130,170,.3);}
   .table{width:100%;border-collapse:collapse;font-size:10.5px;table-layout:fixed;}
+  .table th{position:sticky;top:0;background:#eef3fb;color:var(--sub);font-weight:600;z-index:1;}
   .table th:nth-child(1),.table td:nth-child(1){width:20%;white-space:nowrap;}
   .table th:nth-child(2),.table td:nth-child(2){width:21%;}
   .table th:nth-child(3),.table td:nth-child(3){width:12%;}
   .table th:nth-child(4),.table td:nth-child(4){width:17%;}
   .table th:nth-child(5),.table td:nth-child(5){width:18%;white-space:nowrap;}
   .table th:nth-child(6),.table td:nth-child(6){width:12%;white-space:nowrap;}
-  .table th{position:sticky;top:0;background:#eef3fb;color:var(--sub);font-weight:600;z-index:1;}
-  .table th,.table td{padding:8px 3px;text-align:center;border-bottom:1px solid rgba(110,130,170,.22);word-break:break-all;line-height:1.4;}
+  .table th,.table td{padding:7px 2px;text-align:center;border-bottom:1px solid rgba(110,130,170,.22);word-break:break-all;line-height:1.4;}
   .table td .cell{display:block;overflow-wrap:anywhere;}
   .hit{color:var(--green);font-weight:700;} .miss{color:var(--red);font-weight:700;} .wait{color:var(--orange);font-weight:700;}
   .green{color:var(--green);} .red{color:var(--red);} .gold{color:var(--gold);} .blue{color:var(--blue);}
-  .tip{font-size:11px;color:var(--sub);line-height:1.7;margin-top:8px;}
+  .tip{font-size:10px;color:var(--sub);line-height:1.6;margin-top:6px;}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="head">
     <h1>🎯 秒秒28 预测器</h1>
-    <div class="sub">手动录入 · PC28自动 · 双模式 | 6模型融合 + 和值区段</div>
+    <div class="sub">输入号码自动出预测 · 双模式 · 自动验证</div>
   </div>
 
+  <!-- 模式 -->
   <div class="card">
     <div class="row">
-      <button class="btn btn-blue" id="modeManual" onclick="setMode('manual')">📝 手动模式</button>
+      <button class="btn btn-blue" id="modeManual" onclick="setMode('manual')">📝 手动</button>
       <button class="btn btn-sec" id="modeAuto" onclick="setMode('auto')">⚡ PC28自动</button>
     </div>
-    <div class="status" id="last">手动模式：录入开奖号码 → 点「立即预测」</div>
+    <div class="status" id="last">手动模式：录号码 → 自动预测</div>
   </div>
 
+  <!-- 预测结果（录入后自动刷新，无需点击） -->
   <div class="card" id="predCard" style="display:none;">
-    <h3><span class="bar"></span>本期预测</h3>
+    <h3><span class="bar"></span>本期预测 <span style="font-size:10px;color:var(--sub);margin-left:auto;">录入即自动更新</span></h3>
     <div class="pred-grid">
       <div class="pred-main">
         <div class="pbox pbox-main">
-          <div class="ptag">🎯 主攻组合</div>
+          <div class="ptag">🎯 主攻</div>
           <div class="pval" id="mainVal">-- --</div>
         </div>
       </div>
       <div class="pred-guard">
         <div class="pbox pbox-guard">
-          <div class="ptag">🛡 防守组合</div>
+          <div class="ptag">🛡 防守</div>
           <div class="pval" id="guardVal">--</div>
         </div>
       </div>
@@ -169,58 +175,66 @@
     <div class="sum-row">
       <div class="sbox"><div class="stag">和值区段</div><div class="sval" id="sumZone">--</div></div>
       <div class="sbox"><div class="stag">重点和值</div><div class="sval" id="sumPoint">--</div></div>
-      <div class="sbox"><div class="stag">和值倾向</div><div class="sval" id="sumTend">--</div></div>
+      <div class="sbox"><div class="stag">倾向</div><div class="sval" id="sumTend">--</div></div>
     </div>
-    <div class="score-list" id="scoreList"></div>
-    <div class="zone" id="zoneList"></div>
+    <details>
+      <summary>📊 展开概率详情（四路概率 + 六区段）</summary>
+      <div class="score-list" id="scoreList"></div>
+      <div class="zone" id="zoneList"></div>
+    </details>
     <div class="stats">
       <div class="stat"><div class="n" id="btRate">--</div><div class="l">主攻命中率</div></div>
       <div class="stat"><div class="n" id="sumRate">--</div><div class="l">和值区段命中</div></div>
       <div class="stat"><div class="n" id="dataCount">0</div><div class="l">数据期数</div></div>
     </div>
-    <div class="row" style="margin-top:12px;">
-      <button class="btn btn-pri" onclick="doPredict()">🔮 立即预测</button>
-      <button class="btn btn-sec" onclick="doBacktest()">📊 回测验证</button>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn btn-sec" onclick="doBacktest()">📈 回测</button>
+      <button class="btn btn-sec" onclick="doPredict()">🔄 手动刷新</button>
     </div>
   </div>
 
+  <!-- 录入（输完自动预测） -->
   <div class="card" id="manualCard">
-    <h3><span class="bar"></span>录入开奖</h3>
+    <h3><span class="bar"></span>录入本期三码 <span style="font-size:10px;color:var(--sub);margin-left:auto;">输完自动预测</span></h3>
     <div class="digits">
       <input type="number" id="d1" min="0" max="9" inputmode="numeric" placeholder="0">
       <input type="number" id="d2" min="0" max="9" inputmode="numeric" placeholder="0">
       <input type="number" id="d3" min="0" max="9" inputmode="numeric" placeholder="0">
     </div>
-    <div class="row" style="margin-bottom:12px;">
-      <button class="btn btn-pri" onclick="addOne()">➕ 添加本期</button>
-      <button class="btn btn-bad" onclick="delLast()">🗑 删最后一条</button>
-    </div>
-    <div class="status" style="margin:0 0 8px 0;">批量粘贴历史（每行一条，支持 <b>8+8+7 / 887 / 和值23 / 带期号整行</b>）</div>
-    <textarea id="batch" placeholder="例：&#10;8+8+7&#10;9+3+5&#10;和值19&#10;期号3493075 开奖6+2+1=9 小单"></textarea>
-    <div class="row">
-      <button class="btn btn-blue" onclick="batchImport()">📥 解析导入</button>
-      <button class="btn btn-bad" onclick="clearAll()">🧹 清空数据</button>
-    </div>
-    <div class="status" id="dataInfo">当前 0 期数据</div>
+    <details>
+      <summary>📥 批量粘贴历史 / 数据管理</summary>
+      <textarea id="batch" placeholder="每行一条：8+8+7 / 887 / 和值23 / 期号xxx 开奖6+2+1=9"></textarea>
+      <div class="row">
+        <button class="btn btn-blue" onclick="batchImport()">📥 导入</button>
+        <button class="btn btn-bad" onclick="delLast()">🗑 删末条</button>
+        <button class="btn btn-bad" onclick="clearAll()">🧹 清空</button>
+      </div>
+      <div class="status" id="dataInfo" style="margin-top:6px;">当前 0 期数据</div>
+    </details>
   </div>
 
+  <!-- 预测记录（无限，自动验证） -->
   <div class="card">
-    <h3><span class="bar"></span>预测记录（不设上限）</h3>
-    <div class="stats" style="margin-top:0;margin-bottom:10px;">
+    <h3><span class="bar"></span>预测记录 <span style="font-size:10px;color:var(--sub);margin-left:auto;">自动存档 · 不设上限</span></h3>
+    <div class="stats" style="margin-top:0;margin-bottom:8px;">
       <div class="stat"><div class="n" id="prTotal">0</div><div class="l">总预测</div></div>
       <div class="stat"><div class="n" id="prChecked">0</div><div class="l">已验证</div></div>
-      <div class="stat"><div class="n" id="prHit">0</div><div class="l">主攻命中</div></div>
+      <div class="stat"><div class="n" id="prHit">0</div><div class="l">命中</div></div>
       <div class="stat"><div class="n" id="prRate">--</div><div class="l">命中率</div></div>
     </div>
     <div class="table-scroll">
       <table class="table" id="prTable"></table>
     </div>
-    <div class="row" style="margin-top:10px;">
-      <button class="btn btn-bad" onclick="clearPreds()">🧹 清空预测记录</button>
-    </div>
-    <div class="tip">每次「立即预测」自动存档一条；录入本期开奖后自动验证最近一条未验证的预测。记录全部保存在本机，永不删除、不设上限。</div>
+    <details>
+      <summary>🧹 清空预测记录</summary>
+      <div class="row" style="margin-top:6px;">
+        <button class="btn btn-bad" onclick="clearPreds()">确认清空预测记录</button>
+      </div>
+    </details>
+    <div class="tip">每次预测自动存档；录入开奖后自动验证并写入算式（如 1+2+3=6）。保存在本机，永不删除。</div>
   </div>
 
+  <!-- 回测结果 -->
   <div class="card" id="btCard" style="display:none;">
     <h3><span class="bar"></span>回测报告（最近 60 期）</h3>
     <div class="stats">
@@ -229,24 +243,27 @@
       <div class="stat"><div class="n" id="btCover">--</div><div class="l">含防守覆盖率</div></div>
       <div class="stat"><div class="n" id="btSum">--</div><div class="l">和值区段命中</div></div>
     </div>
-    <div class="table-scroll" style="max-height:45vh;">
+    <div class="table-scroll" style="max-height:40vh;margin-top:8px;">
       <table class="table" id="btTable"></table>
     </div>
     <div class="tip">回测＝用历史模拟「当时这样预测会不会中」，主攻命中率 50% 上下属正常。</div>
   </div>
 
+  <!-- 资金管理（折叠） -->
   <div class="card">
-    <h3><span class="bar"></span>资金管理</h3>
-    <div class="table-scroll" style="max-height:none;">
-      <table class="table">
-        <tr><th>状态</th><th>主攻</th><th>防守</th><th>说明</th></tr>
-        <tr><td class="green">起步</td><td>1 倍</td><td>0.5 倍</td><td>主攻两路各1倍</td></tr>
-        <tr><td class="gold">连负1次</td><td>2.2 倍</td><td>1.1 倍</td><td>倍投追回</td></tr>
-        <tr><td class="red">连负2次</td><td>4.8 倍</td><td>2.4 倍</td><td>封顶</td></tr>
-        <tr><td class="blue">连中2次</td><td>1 倍</td><td>0.5 倍</td><td>复位</td></tr>
-      </table>
-    </div>
-    <div class="tip">铁律：单日止损 20% 停手；止盈 30% 停手；倍投最多 3 层。数据录入越多预测越稳，先录 60 期以上再实战。</div>
+    <details>
+      <summary>💰 资金管理（点开看倍投表）</summary>
+      <div class="table-scroll" style="max-height:none;margin-top:6px;">
+        <table class="table">
+          <tr><th>状态</th><th>主攻</th><th>防守</th><th>说明</th></tr>
+          <tr><td class="green">起步</td><td>1 倍</td><td>0.5 倍</td><td>主攻两路各1倍</td></tr>
+          <tr><td class="gold">连负1次</td><td>2.2 倍</td><td>1.1 倍</td><td>倍投追回</td></tr>
+          <tr><td class="red">连负2次</td><td>4.8 倍</td><td>2.4 倍</td><td>封顶</td></tr>
+          <tr><td class="blue">连中2次</td><td>1 倍</td><td>0.5 倍</td><td>复位</td></tr>
+        </table>
+      </div>
+      <div class="tip">铁律：单日止损 20% 停手；止盈 30% 停手；倍投最多 3 层。先录 60 期以上再实战。</div>
+    </details>
   </div>
 </div>
 
@@ -286,11 +303,12 @@ function refreshDataInfo(){
   const info = document.getElementById("dataInfo");
   const last3 = d.slice(-3).map(x=>x.sum + "(" + comboOf(x.sum) + ")").join(" → ");
   info.innerHTML = d.length
-    ? `当前 <b>${d.length}</b> 期数据 | 最近: ${last3}`
-    : "当前 0 期数据（先录 60 期以上效果最好）";
+    ? `当前 <b>${d.length}</b> 期 | 最近: ${last3}`
+    : "当前 0 期（先录 60 期以上效果最好）";
   document.getElementById("dataCount").textContent = d.length;
 }
 
+/* ---------- 预测记录 ---------- */
 function fmtTime(ts){
   const dt = new Date(ts);
   const p = (n)=>String(n).padStart(2,"0");
@@ -306,7 +324,7 @@ function renderPredTable(){
   document.getElementById("prRate").textContent = checked.length ? (hit/checked.length*100).toFixed(1)+"%" : "--";
   const el = document.getElementById("prTable");
   if(!preds.length){
-    el.innerHTML = `<tr><td colspan="6" style="color:var(--sub);padding:14px;">还没有预测记录，点「立即预测」后自动存档</td></tr>`;
+    el.innerHTML = `<tr><td colspan="6" style="color:var(--sub);padding:12px;">还没有预测记录，录入开奖后自动生成</td></tr>`;
     return;
   }
   el.innerHTML = `<tr><th>时间</th><th>主攻</th><th>防守</th><th>重点和值</th><th>实际开奖</th><th>结果</th></tr>` +
@@ -355,6 +373,7 @@ function clearPreds(){
   renderPredTable();
 }
 
+/* ---------- 录入（自动预测） ---------- */
 function addOne(){
   const a = document.getElementById("d1").value;
   const b = document.getElementById("d2").value;
@@ -367,12 +386,12 @@ function addOne(){
   saveData(d);
   document.getElementById("d1").value=""; document.getElementById("d2").value=""; document.getElementById("d3").value="";
   refreshDataInfo();
-  document.getElementById("predCard").style.display = "block";
   const v = verifyLastPred(sum, a+"+"+b+"+"+c);
   const st = document.getElementById("last");
   st.innerHTML = v
-    ? `已录入 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，自动验证了上一条预测：${v.hit?"✅命中":"❌未中"}`
-    : `已录入 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，暂无待验证预测`;
+    ? `已录 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)}) → 上条预测${v.hit?"✅命中":"❌未中"}，已自动更新预测`
+    : `已录 <b>${a}+${b}+${c}=${sum}</b>(${comboOf(sum)})，已自动更新预测`;
+  autoPredict();
 }
 function delLast(){
   const d = loadData();
@@ -380,11 +399,13 @@ function delLast(){
   d.pop();
   saveData(d);
   refreshDataInfo();
+  autoPredict();
 }
 function clearAll(){
   if(!confirm("确定清空全部开奖数据？")) return;
   saveData([]);
   refreshDataInfo();
+  document.getElementById("last").innerHTML = "已清空数据，请重新录入历史开奖";
 }
 
 function parseLine(line){
@@ -423,13 +444,13 @@ function batchImport(){
   saveData(d);
   document.getElementById("batch").value = "";
   refreshDataInfo();
-  // 用最后一条（最新）导入数据验证最近的未验证预测
   if(lastRec){ verifyLastPred(lastRec.sum, lastRec.label); }
   const last = document.getElementById("last");
-  last.innerHTML = `导入完成：成功 <b>${ok}</b> 条，跳过 ${fail} 条。现在共 <b>${d.length}</b> 期数据`;
-  document.getElementById("predCard").style.display = "block";
+  last.innerHTML = `导入成功 <b>${ok}</b> 条（跳过 ${fail} 条），共 <b>${d.length}</b> 期，已自动预测`;
+  autoPredict();
 }
 
+/* ---------- 模型 ---------- */
 function probModel(sums, combos){
   const n = combos.length;
   const S = {大单:0,大双:0,小单:0,小双:0};
@@ -536,15 +557,17 @@ function applyPrediction(ranked, S, sm){
   addPrediction(main.join(" "), guard, sm.top3.join("/"), sm.zones[0].range, sm.zones[0].name);
 }
 
+/* ---------- 模式 ---------- */
 function setMode(m){
   mode = m;
   document.getElementById("modeManual").className = m==="manual" ? "btn btn-blue" : "btn btn-sec";
   document.getElementById("modeAuto").className = m==="auto" ? "btn btn-blue" : "btn btn-sec";
   document.getElementById("manualCard").style.display = m==="manual" ? "block" : "none";
   document.getElementById("last").innerHTML = m==="manual"
-    ? "手动模式：录入开奖号码 → 点「立即预测」"
-    : "PC28自动：正在加载最新开奖…";
+    ? "手动模式：录号码 → 自动预测"
+    : "PC28自动：正在加载…";
   if(m === "auto"){ doPredict(); }
+  else { autoPredict(); }
 }
 
 async function fetchAuto(){
@@ -553,6 +576,18 @@ async function fetchAuto(){
   if(d.message !== "success") throw new Error("接口异常: "+d.message);
   const rows = d.data.slice().reverse();
   return {sums: rows.map(x=>parseInt(x.num)), rows};
+}
+
+/* 手动模式：静默自动预测 */
+function autoPredict(){
+  if(mode !== "manual") return;
+  const d = loadData();
+  if(d.length < 10) return;
+  const sums = d.map(x=>x.sum);
+  const combos = sums.map(comboOf);
+  const {ranked, S} = probModel(sums, combos);
+  const sm = sumModel(sums);
+  applyPrediction(ranked, S, sm);
 }
 
 async function doPredict(){
@@ -574,17 +609,14 @@ async function doPredict(){
   }
   const d = loadData();
   if(d.length < 10){
-    document.getElementById("last").innerHTML = "数据不足 10 期，先去录入历史开奖（建议 60 期以上）";
+    document.getElementById("last").innerHTML = "数据不足 10 期，先录入历史开奖（建议 60 期以上）";
     return;
   }
-  const sums = d.map(x=>x.sum);
-  const combos = sums.map(comboOf);
-  const {ranked, S} = probModel(sums, combos);
-  const sm = sumModel(sums);
-  applyPrediction(ranked, S, sm);
-  document.getElementById("last").innerHTML = `手动模式：共 <b>${d.length}</b> 期数据，预测完成（已存档到预测记录）`;
+  autoPredict();
+  document.getElementById("last").innerHTML = `手动模式：共 <b>${d.length}</b> 期数据，预测完成（已存档）`;
 }
 
+/* ---------- 回测 ---------- */
 async function doBacktest(){
   let rows = null;
   if(mode === "auto"){
@@ -649,15 +681,12 @@ function bindDigitJump(){
   const d1 = document.getElementById("d1");
   const d2 = document.getElementById("d2");
   const d3 = document.getElementById("d3");
-  // 输满一位自动跳下一个
   d1.addEventListener("input", ()=>{ if(d1.value.length >= 1){ d2.focus(); } });
   d2.addEventListener("input", ()=>{ if(d2.value.length >= 1){ d3.focus(); } });
   d3.addEventListener("input", ()=>{ if(d3.value.length >= 1){ addOne(); } });
-  // 回车/换行键跳下一个
   d1.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); d2.focus(); } });
   d2.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); d3.focus(); } });
   d3.addEventListener("keydown", (e)=>{ if(e.key === "Enter"){ e.preventDefault(); addOne(); } });
-  // 退格跳回上一个
   d2.addEventListener("keydown", (e)=>{ if(e.key === "Backspace" && d2.value === ""){ d1.focus(); } });
   d3.addEventListener("keydown", (e)=>{ if(e.key === "Backspace" && d3.value === ""){ d2.focus(); } });
 }
